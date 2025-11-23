@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de proyectos</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background-color: #f0f0f0; }
+        h1 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Estadísticas de todos los proyectos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Proyecto</th>
+                <th>Total votos</th>
+                <th>😁 Muy feliz</th>
+                <th>😊 Feliz</th>
+                <th>😐 Neutral</th>
+                <th>☹️ Triste</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fila in datos %}
+                <tr>
+                    <td>{{ fila.proyecto.nombre }}</td>
+                    <td>{{ fila.total }}</td>
+                    <td>{{ fila.c1 }}</td>
+                    <td>{{ fila.c2 }}</td>
+                    <td>{{ fila.c3 }}</td>
+                    <td>{{ fila.c4 }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">No hay proyectos registrados.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

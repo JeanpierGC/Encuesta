@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - {{ proyecto.nombre }}</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
+    <h2>Resultados del proyecto: {{ proyecto.nombre }}</h2>
+    <p>Total de votos: {{ total }}</p>
+
+    <ul>
+        <li>😁 Muy feliz: {{ conteos.1 }}</li>
+        <li>😊 Feliz: {{ conteos.2 }}</li>
+        <li>😐 Neutral: {{ conteos.3 }}</li>
+        <li>☹️ Triste: {{ conteos.4 }}</li>
+    </ul>
+</body>
+</html>

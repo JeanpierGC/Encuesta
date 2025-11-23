@@ -2,35 +2,152 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Encuesta - {{ proyecto.nombre }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votar - {{ proyecto.nombre }}</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .caritas {
+        /* Reset básico */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            min-height: 100vh;
+            padding: 20px;
         }
-        button {
-            background: none;
-            border: none;
-            font-size: 50px;
+        
+        .container { width: 100%; max-width: 500px; text-align: center; margin-top: 20px; }
+        
+        h2 { color: #333; margin-bottom: 5px; font-size: 1.6rem; }
+        .project-name { color: #007bff; font-weight: bold; font-size: 1.4rem; margin-bottom: 15px; display: block; }
+
+        /* --- CAJA DE INFORMACIÓN --- */
+        .info-box {
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 8px;
+        }
+        /* Elimina el borde del último elemento si es simple */
+        .info-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .info-label { font-weight: bold; color: #555; }
+        .info-value { color: #333; }
+
+        /* --- CLASES NUEVAS PARA EL LÍDER Y EQUIPO (Reemplazan los estilos inline) --- */
+        .leader-text {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .team-section {
+            display: block; /* Para que ocupe todo el ancho */
+            border-top: 1px dashed #ccc;
+            margin-top: 8px;
+            padding-top: 8px;
+        }
+
+        .team-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .team-list {
+            display: block;
+            line-height: 1.6;
+        }
+
+        /* --- BOTONES DE VOTACIÓN --- */
+        .caritas-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .card-btn {
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            height: 150px;
+            width: 100%;
             cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-        h2 { margin-top: 40px; }
+        
+        .emoji { font-size: 4rem; margin-bottom: 10px; display: block; transition: transform 0.2s; }
+        .label { font-size: 1rem; color: #666; font-weight: 600; }
+
+        .card-btn:hover { border-color: #007bff; background-color: #f0f8ff; transform: translateY(-3px); }
+        .card-btn:hover .emoji { transform: scale(1.1); }
+        .card-btn:active { transform: scale(0.96); background-color: #e6f2ff; border-color: #0056b3; }
+
+        .btn-1:hover { border-color: #28a745; background-color: #e8f5e9; }
+        .btn-2:hover { border-color: #82c91e; background-color: #f4fce3; }
+        .btn-3:hover { border-color: #adb5bd; background-color: #f8f9fa; }
+        .btn-4:hover { border-color: #fa5252; background-color: #fff5f5; }
     </style>
 </head>
 <body>
-    <h2>¿Qué te pareció el proyecto <strong>{{ proyecto.nombre }}</strong>?</h2>
+    <div class="container">
+        <h2>Califica el Proyecto</h2>
+        <span class="project-name">{{ proyecto.nombre }}</span>
 
-    <form method="POST">
-        {% csrf_token %}
-        <div class="caritas">
-            <button type="submit" name="opcion" value="1" title="Muy feliz">😁</button>
-            <button type="submit" name="opcion" value="2" title="Feliz">😊</button>
-            <button type="submit" name="opcion" value="3" title="Neutral">😐</button>
-            <button type="submit" name="opcion" value="4" title="Triste">☹️</button>
+        <div class="info-box">
+            <div class="info-row">
+                <span class="info-label">📚 Curso:</span>
+                <span class="info-value">{{ proyecto.curso|default:"General" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">👨‍🏫 Asesor:</span>
+                <span class="info-value">{{ proyecto.asesor|default:"No registrado" }}</span>
+            </div>
+            
+            <div class="info-row">
+                <span class="info-label">👑 Líder:</span>
+                <span class="info-value leader-text">
+                    {{ proyecto.lider|default:"No asignado" }}
+                </span>
+            </div>
+
+            <div class="info-row team-section">
+                <span class="info-label team-label">👥 Equipo:</span>
+                <span class="info-value team-list">
+                    {{ proyecto.integrantes|default:"No registrados"|linebreaksbr }}
+                </span>
+            </div>
         </div>
-    </form>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="caritas-grid">
+                <button type="submit" name="opcion" value="1" class="card-btn btn-1">
+                    <span class="emoji">😁</span><span class="label">Muy Feliz</span>
+                </button>
+                <button type="submit" name="opcion" value="2" class="card-btn btn-2">
+                    <span class="emoji">😊</span><span class="label">Feliz</span>
+                </button>
+                <button type="submit" name="opcion" value="3" class="card-btn btn-3">
+                    <span class="emoji">😐</span><span class="label">Neutral</span>
+                </button>
+                <button type="submit" name="opcion" value="4" class="card-btn btn-4">
+                    <span class="emoji">☹️</span><span class="label">Triste</span>
+                </button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

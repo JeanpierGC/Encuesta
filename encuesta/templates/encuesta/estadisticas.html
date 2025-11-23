@@ -3,45 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estadísticas de proyectos</title>
+    <title>Estadísticas Generales</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-        th { background-color: #f0f0f0; }
-        h1 { text-align: center; }
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background-color: #f4f7f6; }
+        h1 { text-align: center; color: #333; margin-bottom: 20px; }
+        
+        .table-container {
+            background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow-x: auto; /* Permite scroll horizontal en celular */
+            padding: 10px;
+        }
+        
+        table { border-collapse: collapse; width: 100%; min-width: 600px; } /* min-width asegura que no se aplaste */
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background-color: #f8f9fa; color: #555; font-weight: bold; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #f1f3f5; }
+        
+        td:nth-child(1) { font-weight: bold; color: #007bff; }
+        .center { text-align: center; }
     </style>
 </head>
 <body>
-    <h1>Estadísticas de todos los proyectos</h1>
+    <h1>📊 Estadísticas de Proyectos</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Proyecto</th>
-                <th>Total votos</th>
-                <th>😁 Muy feliz</th>
-                <th>😊 Feliz</th>
-                <th>😐 Neutral</th>
-                <th>☹️ Triste</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for fila in datos %}
+    <div class="table-container">
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ fila.proyecto.nombre }}</td>
-                    <td>{{ fila.total }}</td>
-                    <td>{{ fila.c1 }}</td>
-                    <td>{{ fila.c2 }}</td>
-                    <td>{{ fila.c3 }}</td>
-                    <td>{{ fila.c4 }}</td>
+                    <th>Proyecto</th>
+                    <th class="center">Total</th>
+                    <th class="center">😁 Muy feliz</th>
+                    <th class="center">😊 Feliz</th>
+                    <th class="center">😐 Neutral</th>
+                    <th class="center">☹️ Triste</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="6">No hay proyectos registrados.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for fila in datos %}
+                    <tr>
+                        <td>{{ fila.proyecto.nombre }}</td>
+                        <td class="center"><strong>{{ fila.total }}</strong></td>
+                        <td class="center">{{ fila.c1 }}</td>
+                        <td class="center">{{ fila.c2 }}</td>
+                        <td class="center">{{ fila.c3 }}</td>
+                        <td class="center">{{ fila.c4 }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="center">No hay proyectos registrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

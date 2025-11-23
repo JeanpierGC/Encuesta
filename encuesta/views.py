@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Proyecto, Voto
+from .forms import ProyectoForm  # <--- IMPORTANTE: No olvides esta línea
 
 def estadisticas(request):
     proyectos = Proyecto.objects.all()
@@ -30,6 +31,7 @@ def inicio(request):
     if proyecto:
         return redirect('votar', proyecto_id=proyecto.id)
     return render(request, 'encuesta/sin_proyectos.html')
+
 def votar(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
@@ -51,8 +53,6 @@ def votar(request, proyecto_id):
 
     return render(request, 'encuesta/votar.html', {"proyecto": proyecto})
 
-
-
 def resultados(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
 
@@ -70,4 +70,17 @@ def resultados(request, proyecto_id):
         'conteos': conteos,
     })
 
-
+# --- NUEVA FUNCIÓN PARA EDITAR ---
+def editar_proyecto(request, proyecto_id):
+    proyecto = get_object_or_404(Proyecto, id=proyecto_id)
+    
+    if request.method == 'POST':
+        form = ProyectoForm(request.POST, instance=proyecto)
+        if form.is_valid():
+            form.save()
+            # Al guardar, redirige a la pantalla de votar para ver los cambios
+            return redirect('votar', proyecto_id=proyecto.id)
+    else:
+        form = ProyectoForm(instance=proyecto)
+    
+    return render(request, 'encuesta/editar.html', {'form': form, 'proyecto': proyecto})

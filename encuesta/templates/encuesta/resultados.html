@@ -4,16 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados - {{ proyecto.nombre }}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; width: 100%; max-width: 500px; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        
+        h2 { text-align: center; color: #333; margin-bottom: 5px; }
+        .total { text-align: center; color: #888; margin-bottom: 30px; font-size: 0.9rem; }
+        
+        .stat-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .stat-row:last-child { border-bottom: none; }
+        .emoji-label { display: flex; align-items: center; font-weight: bold; color: #555; }
+        .emoji-label span { font-size: 1.5rem; margin-right: 10px; }
+        .count { background-color: #e9ecef; padding: 5px 15px; border-radius: 20px; font-weight: bold; color: #333; }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif;">
-    <h2>Resultados del proyecto: {{ proyecto.nombre }}</h2>
-    <p>Total de votos: {{ total }}</p>
+<body>
+    <div class="container">
+        <h2>{{ proyecto.nombre }}</h2>
+        <p class="total">Total de votos: {{ total }}</p>
 
-    <ul>
-        <li>😁 Muy feliz: {{ conteos.1 }}</li>
-        <li>😊 Feliz: {{ conteos.2 }}</li>
-        <li>😐 Neutral: {{ conteos.3 }}</li>
-        <li>☹️ Triste: {{ conteos.4 }}</li>
-    </ul>
+        <div class="stat-row">
+            <div class="emoji-label"><span>😁</span> Muy feliz</div>
+            <div class="count">{{ conteos.1 }}</div>
+        </div>
+        <div class="stat-row">
+            <div class="emoji-label"><span>😊</span> Feliz</div>
+            <div class="count">{{ conteos.2 }}</div>
+        </div>
+        <div class="stat-row">
+            <div class="emoji-label"><span>😐</span> Neutral</div>
+            <div class="count">{{ conteos.3 }}</div>
+        </div>
+        <div class="stat-row">
+            <div class="emoji-label"><span>☹️</span> Triste</div>
+            <div class="count">{{ conteos.4 }}</div>
+        </div>
+    </div>
 </body>
 </html>

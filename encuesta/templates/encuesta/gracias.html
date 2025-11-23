@@ -4,10 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Gracias!</title>
+    <style>
+        /* Reset básico */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 20px; 
+        }
+        
+        .card {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center;
+        }
+        
+        h1 { 
+            color: #28a745; 
+            margin-bottom: 10px; 
+        }
+        
+        p { 
+            color: #666; 
+            margin-bottom: 15px; 
+            line-height: 1.5; 
+        }
+        
+        .emoji-big { 
+            font-size: 5rem; 
+            display: block; 
+            margin-bottom: 20px; 
+            animation: pop 0.5s ease; 
+        }
+
+        .footer-msg {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        @keyframes pop { 
+            0% { transform: scale(0); } 
+            80% { transform: scale(1.1); } 
+            100% { transform: scale(1); } 
+        }
+    </style>
 </head>
-<body style="text-align:center; font-family: Arial, sans-serif;">
-    <h2>¡Gracias por tu respuesta! ✅</h2>
-    <p>Tu opinión sobre <strong>{{ proyecto.nombre }}</strong> ha sido registrada.</p>
+<body>
+    <div class="card">
+        <span class="emoji-big">✅</span>
+        <h1>¡Voto Registrado!</h1>
+        <p>Tu opinión sobre <strong>{{ proyecto.nombre }}</strong> se ha guardado correctamente.</p>
+        
+        <p class="footer-msg">Gracias por participar. Ya puedes cerrar esta ventana.</p>
+    </div>
 </body>
 </html>
-

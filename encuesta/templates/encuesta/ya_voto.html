@@ -4,10 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ya votaste</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        
+        .card {
+            background-color: white; padding: 40px 30px; border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;
+        }
+        h2 { color: #333; margin-bottom: 10px; }
+        p { color: #666; margin-bottom: 20px; }
+        .emoji-big { font-size: 5rem; display: block; margin-bottom: 20px; }
+        
+        .footer-msg { font-size: 0.9rem; color: #888; margin-top: 20px; }
+    </style>
 </head>
-<body style="text-align:center; font-family: Arial;">
-    <h2>¡Ya has votado por este proyecto! 😊</h2>
-    <p>Proyecto: <strong>{{ proyecto.nombre }}</strong></p>
-    <p>Gracias por participar.</p>
+<body>
+    <div class="card">
+        <span class="emoji-big">✋</span>
+        <h2>¡Ya participaste!</h2>
+        <p>Ya hemos registrado tu voto para el proyecto: <br><strong>{{ proyecto.nombre }}</strong></p>
+        
+        <p class="footer-msg">Solo se permite un voto por persona.</p>
+    </div>
 </body>
 </html>
